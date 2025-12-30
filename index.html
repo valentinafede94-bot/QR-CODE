@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Ciao ALE!</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #00ff7f;
+            font-family: "Courier New", monospace;
+            padding: 30px;
+        }
+        .terminal {
+            max-width: 700px;
+            margin: auto;
+            border: 2px solid #00ff7f;
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="terminal" id="terminal"></div>
+
+<script>
+    const lines = [
+        ">>> Avvio interprete Python...",
+        ">>> Elaborazione codice...",
+        ">>>",
+        ">>> Tanti Auguri di Buon Compleanno!",
+        ">>>",
+        ">>> Buono Amazon:",
+        ">>> XXXX-XXXX-XXXX"
+    ];
+
+    const terminal = document.getElementById("terminal");
+    let index = 0;
+
+    function typeLine() {
+        if (index < lines.length) {
+            const p = document.createElement("p");
+            p.textContent = lines[index];
+            terminal.appendChild(p);
+            index++;
+            setTimeout(typeLine, 700); // velocità di esecuzione
+        }
+    }
+
+    typeLine();
+</script>
+
+</body>
+</html>
