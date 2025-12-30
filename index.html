@@ -16,13 +16,25 @@
             border: 2px solid #00ff7f;
             padding: 20px;
             border-radius: 10px;
-            min-height: 200px;
+            min-height: 220px;
+        }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-<div class="terminal" id="terminal"></div>
+<div class="terminal" id="terminal">
+    <span class="cursor">|</span>
+</div>
 
 <script>
     const lines = [
@@ -36,19 +48,30 @@
     ];
 
     const terminal = document.getElementById("terminal");
-    let index = 0;
+    const cursor = document.querySelector(".cursor");
 
-    function typeLine() {
-        if (index < lines.length) {
-            const p = document.createElement("p");
-            p.textContent = lines[index];
-            terminal.appendChild(p);
-            index++;
-            setTimeout(typeLine, 700); // velocità di esecuzione
+    let lineIndex = 0;
+    let charIndex = 0;
+    let currentLine = "";
+
+    function typeCharacter() {
+        if (lineIndex < lines.length) {
+            if (charIndex < lines[lineIndex].length) {
+                currentLine += lines[lineIndex][charIndex];
+                cursor.insertAdjacentText("beforebegin", lines[lineIndex][charIndex]);
+                charIndex++;
+                setTimeout(typeCharacter, 50);
+            } else {
+                cursor.insertAdjacentHTML("beforebegin", "<br>");
+                currentLine = "";
+                charIndex = 0;
+                lineIndex++;
+                setTimeout(typeCharacter, 500);
+            }
         }
     }
 
-    typeLine();
+    typeCharacter();
 </script>
 
 </body>
